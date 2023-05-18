@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EMSProject6.Models.Job>
+@using EMSProject6.Data
+
+@{
+    ViewData["Title"] = "Index";
+    var company = new EMSDbContext().Companies.Where(c => !c.IsToBeDeleted).ToList().ElementAt(0).Name;
+
+}
+
+<h1>Welcome to @company</h1>
+
+<p>
+    <a asp-action="Create">Create a new Job profile</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Job Title
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+
+            string activate = "Deactivate";
+            if (!item.IsActive)            
+                activate = "Activate";
+                      
+                            
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="alert-warning">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="alert-info">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@activate</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
