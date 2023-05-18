@@ -23,7 +23,9 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build ./EMSProject6 --configuration Release
+        run: dotnet build  --configuration Release
+      - name: Test with dotnet
+        run: dotnet test ./EMSProject6
 
       - name: dotnet publish
         run: dotnet publish ./EMSProject6 -c Release -o ${{env.DOTNET_ROOT}}/myapp
